@@ -1,0 +1,87 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <title>Title</title>
+  <!-- Required meta tags -->
+  <meta charset="utf-8" />
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+
+  <!-- Bootstrap CSS v5.2.1 -->
+  <link
+    href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
+    rel="stylesheet"
+    integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN"
+    crossorigin="anonymous" />
+
+  <!-- Custom -->
+  <link rel="stylesheet" href="../style/style.css">
+  <link rel="stylesheet" href="../style/players.css">
+</head>
+
+<?php
+require_once('../controller.php');
+
+$players = GetPlayers($_SESSION['code']);
+if ($_SESSION['current'] < count($_SESSION['questions'])) {
+  $question = $_SESSION['questions'][$_SESSION['current']];
+  $components = explode(";", $question);
+  UpdatePlayersPoints($players, $components[5]);
+}
+
+// Refresh
+$players = GetPlayers($_SESSION['code']);
+?>
+
+<body>
+  <?php require_once('../components/header.php'); ?>
+  <main>
+    <div class="container mt-4 ms-5">
+      <div class="col-4">
+        <?php foreach ($players as $player): ?>
+          <div class="d-flex flex-column">
+            <div class="gray d-flex flex-row mb-3 border border-3 
+            <?php
+            if ($player['rep'] == $components[5]) {
+              echo "border-success";
+            } else if ($player['rep'] != $components[5] && $player['rep'] != null) {
+              echo "border-danger";
+            } else {
+              echo "border-warning";
+            }
+            ?>
+            ">
+              <div class="player-<?= $player['Color'] ?> m-2" style="width:30px; height:30px;"></div>
+              <div class="d-inline my-auto fs-5 flex-fill"><?= $player['Username'] ?></div>
+              <div class="d-inline m-auto fs-5 me-2 fw-bold"><?= $player['Points'] ?></div>
+            </div>
+          </div>
+        <?php endforeach; ?>
+      </div>
+    </div>
+    <form action="started.php" method="post">
+      <button type="submit" name="next" class="btn gray p-3 position-absolute end-0 top-50 me-3"><?php if ($_SESSION['current'] + 1 < count($_SESSION['questions'])) {
+                                                                                                    echo "Prochaine question";
+                                                                                                  } else {
+                                                                                                    echo "Fin du quiz";
+                                                                                                  } ?></button>
+    </form>
+    </div>
+  </main>
+  <?php require_once('../components/footer.php'); ?>
+  <?php ResetAnswers($_SESSION['code']); ?>
+  <!-- Bootstrap JavaScript Libraries -->
+  <script
+    src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"
+    integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r"
+    crossorigin="anonymous"></script>
+
+  <script
+    src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js"
+    integrity="sha384-BBtl+eGJRgqQAUMxJ7pMwbEyER4l1g+O15P+16Ep7Q9Q+zqX6gSbd85u4mG4QzX+"
+    crossorigin="anonymous"></script>
+</body>
+
+</html>

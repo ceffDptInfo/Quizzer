@@ -1,0 +1,15 @@
+.gray {
+  background-color: #D9D9D9;
+}
+
+.title-big {
+  font-size: 64px;
+}
+
+.example {
+  color: #999999;
+}
+
+.circle {
+  border-radius: 50%;
+}

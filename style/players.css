@@ -1,0 +1,67 @@
+.selected-color {
+  border: 3px solid black;
+}
+
+.player-red {
+  background-color: #D8373D;
+}
+
+.player-orange {
+  background-color: #E7663E;
+}
+
+.player-gold {
+  background-color: #FFB602;
+}
+
+.player-yellow {
+  background-color: #FFDC30;
+}
+
+.player-lime {
+  background-color: #66B245;
+}
+
+.player-green {
+  background-color: #199A62;
+}
+
+.player-cyan {
+  background-color: #00B7AF;
+}
+
+.player-mint {
+  background-color: #6BE1CB;
+}
+
+.player-sky {
+  background-color: #62B1E9;
+}
+
+.player-blue {
+  background-color: #016DB6;
+}
+
+.player-marine {
+  background-color: #3E4981;
+}
+
+.player-purple {
+  background-color: #765991;
+}
+
+.player-violet {
+  background-color: #8D70CC;
+}
+
+.player-lila {
+  background-color: #CFA2D9;
+}
+
+.player-pink {
+  background-color: #FF85B4;
+}
+
+.player-rose {
+  background-color: #E44386;
+}
