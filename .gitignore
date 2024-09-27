@@ -1,4 +1,4 @@
 *.env
-*.sql
 /.vscode/
 placeholder*
+/images/

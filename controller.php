@@ -99,14 +99,12 @@ function CreateQuestions($content, $code)
 
   $db->RemoveQuestions($id);
 
-  foreach ($content as $i => $rep) {
-    $components = explode(";", $rep);
-    foreach ($components as $key => $component) {
-      if ($component == "---") {
-        $components[$key] = null;
-      }
+  for ($i = 0; $i < count($content); $i++) {
+    $reps = [];
+    for ($j = 0; $j < 4; $j++) {
+      $reps[] = $content[$i][0][$j + 1];
     }
-    $db->CreateQuestion($components, $id, $i + 1);
+    $db->CreateQuestion($reps, $id, $i + 1);
   }
 }
 
@@ -121,7 +119,6 @@ function RemoveComments($content)
     }
   }
 
-  array_pop($content);
   foreach ($content as $line) {
     if (!IsLineAComment($line)) {
       $nocomments[] = $line;
@@ -129,25 +126,6 @@ function RemoveComments($content)
   }
 
   return $nocomments;
-}
-
-function ShowQuestion($nb, $code)
-{
-  global $db;
-  $id = $db->GetGameID($code)->fetch()['idGame'];
-  $db->UpdateQuestion($id, $nb + 1);
-  $db->UpdateStatus($id, "en cours");
-
-  $data = explode(";", $_SESSION['questions'][$nb]);
-  $data;
-  $table = [];
-  $table['question'] = $data[0];
-  $table['rep1'] = $data[1];
-  $table['rep2'] = $data[2];
-  $table['rep3'] = $data[3];
-  $table['rep4'] = $data[4];
-
-  return $table;
 }
 
 function GetGameStatus($idPlayer)
@@ -164,10 +142,11 @@ function SendResponse($rep, $time, $userID)
   $db->UpdateResponse($rep, $time, $userID);
 }
 
-function UpdatePlayersPoints($players, $rep)
+function UpdatePlayersPoints($players, $rep, $code)
 {
   global $db;
-  $db->UpdateStatus($players[0]['Game_idGame'], 'leaderboard');
+  $idGame = $db->GetGameID($code)->fetch()['idGame'];
+  $db->UpdateStatus($idGame, 'leaderboard');
 
   foreach ($players as $player) {
     if ($player['rep'] == $rep) {
@@ -189,6 +168,7 @@ function EndGame($code)
   global $db;
   $idGame = $db->GetGameID($code)->fetch()['idGame'];
 
+  DeleteImages($code);
   unset($_SESSION['current']);
   unset($_SESSION['questions']);
 
@@ -214,11 +194,63 @@ function AnswerExists($idPlayer)
   }
 }
 
-function ResetAnswers($code) {
+function ResetAnswers($code)
+{
   global $db;
   $players = GetPlayers($code);
-  
+
   foreach ($players as $p) {
-    $db->UpdateResponse(null, null ,$p['idPlayer']);
+    $db->UpdateResponse(null, null, $p['idPlayer']);
   }
+}
+
+function QuestionToArray($question)
+{
+  $components = explode("::", $question);
+  $qa = explode(";", $components[0]);
+  $param = explode(";", $components[1]);
+
+  for ($i = 0; $i < count($qa); $i++) {
+    if (str_contains($qa[$i], " ")) {
+      $qa[$i] = trim($qa[$i]);
+    }
+
+    if ($qa[$i] == "---") {
+      $qa[$i] = null;
+    }
+  }
+
+  for ($i = 0; $i < count($param); $i++) {
+    if (str_contains($param[$i], " ")) {
+      $param[$i] = trim($param[$i]);
+    }
+  }
+
+  $array[] = $qa;
+  $array[] = $param;
+
+  return $array;
+}
+
+function DeleteImages($code)
+{
+  foreach (scandir('../images/' . $code) as $file) {
+    if ($file != "." && $file != "..") {
+      unlink('../images/' . $code . "/" . $file);
+    }
+  }
+  rmdir('../images/' . $code);
+}
+
+function SetStatus($code, $status)
+{
+  global $db;
+  $idGame = $db->GetGameID($code)->fetch()['idGame'];
+  $db->UpdateStatus($idGame, $status);
+}
+
+function SetGameQuestion($code, $question) {
+  global $db;
+  $idGame = $db->GetGameID($code)->fetch()['idGame'];
+  $db->UpdateQuestion($idGame, $question);
 }

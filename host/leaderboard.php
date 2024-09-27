@@ -26,9 +26,7 @@ require_once('../controller.php');
 
 $players = GetPlayers($_SESSION['code']);
 if ($_SESSION['current'] < count($_SESSION['questions'])) {
-  $question = $_SESSION['questions'][$_SESSION['current']];
-  $components = explode(";", $question);
-  UpdatePlayersPoints($players, $components[5]);
+  UpdatePlayersPoints($players, $_SESSION['questions'][$_SESSION['current']][0][5], $_SESSION['code']);
 }
 
 // Refresh
@@ -44,9 +42,9 @@ $players = GetPlayers($_SESSION['code']);
           <div class="d-flex flex-column">
             <div class="gray d-flex flex-row mb-3 border border-3 
             <?php
-            if ($player['rep'] == $components[5]) {
+            if ($player['rep'] == $_SESSION['questions'][$_SESSION['current']][0][5]) {
               echo "border-success";
-            } else if ($player['rep'] != $components[5] && $player['rep'] != null) {
+            } else if ($player['rep'] != $_SESSION['questions'][$_SESSION['current']][0][5] && $player['rep'] != null) {
               echo "border-danger";
             } else {
               echo "border-warning";

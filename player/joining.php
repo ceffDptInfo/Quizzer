@@ -52,7 +52,7 @@ if (isset($_POST['code']) && isset($_POST['username']) && isset($_POST['color'])
       <!-- La valeur de la couleur est géré par un script js -->
       <input type="hidden" name="color" value="red" id="colorSelection">
       <div class="d-flex flex-wrap mt-5" style="width: 272px;">
-        <div class="player-red me-1 mb-1" style="width: 30px; height:30px ;" onclick="SelectColor(event);"></div>
+        <div class="player-red me-1 mb-1 selected-color" style="width: 30px; height:30px ;" onclick="SelectColor(event);"></div>
         <div class="player-orange me-1 mb-1" style="width: 30px; height:30px ;" onclick="SelectColor(event);"></div>
         <div class="player-gold me-1 mb-1" style="width: 30px; height:30px ;" onclick="SelectColor(event);"></div>
         <div class="player-yellow me-1 mb-1" style="width: 30px; height:30px ;" onclick="SelectColor(event);"></div>

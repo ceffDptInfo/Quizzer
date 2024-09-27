@@ -1,4 +1,4 @@
-let timeleft = 10;
+let timeleft;
 let countdown;
 
 function Countdown() {
@@ -11,6 +11,12 @@ function Countdown() {
 }
 
 function init() {
+  timeleft = document.getElementById("time").innerHTML.trim();
+  if (timeleft < 5) {
+    timeleft = 5;
+  } else if (timeleft > 120) {
+    timeleft = 120;
+  }
   countdown = setInterval(Countdown, 1000);
   Countdown();
 }

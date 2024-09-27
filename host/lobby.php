@@ -55,7 +55,7 @@ if (isset($_POST['start']) && isset($_POST['file'])) {
         <div class="offset-1 col-3">
           <p class="text-center fw-bold fs-2 gray"><?= $_SESSION['code']; ?></p>
           <div class="mt-5 gray">
-            <img src="../placeholder.png" alt="Qr code pour rejoindre la partie" class="w-100 p-4 object-fit-fill">
+            <img src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=<?= $_SESSION['code'] ?>" alt="Qr code pour rejoindre la partie" class="w-100 p-4 object-fit-fill">
           </div>
           <form method="post">
             <button type="submit" name="start" class="btn gray start-50 position-relative translate-middle-x mt-5 fw-semibold w-75">Commencer</button>
@@ -64,8 +64,9 @@ if (isset($_POST['start']) && isset($_POST['file'])) {
         <!-- File import and players -->
         <div class="offset-1 col-5">
           <div class="d-flex justify-content-start align-items-stretch mb-5 flex-column">
-            <input type="file" name="file" class="form-control h-100" accept=".txt,.qcm" id="file" onchange="ParseFile(this, '<?= $_SESSION['code']; ?>');"></input>
+            <input type="file" name="file" class="form-control h-100" id="file" onchange="ParseFile(this, '<?= $_SESSION['code']; ?>');" webkitdirectory></input>
             <p id="file-extension" class="text-danger visually-hidden">Veuillez donner un fichier .txt ou .qcm</p>
+            <p id="file-name" class="text-danger visually-hidden">Le fichier questions.txt n'a pas été trouvé</p>
             </form>
           </div>
           <!-- Players -->

@@ -87,10 +87,10 @@ class Database
   function CreateQuestion(array $reps, int $idGame, int $nbQuestion)
   {
     $stmt = $this->db->prepare("INSERT INTO `quizzer`.`question` (`Rep1`, `Rep2`, `Rep3`, `Rep4`, `game_idGame`, `QuestionNumber`) VALUES (?, ?, ?, ?, ?, ?)");
-    $stmt->bindParam(1, $reps[1]);
-    $stmt->bindParam(2, $reps[2]);
-    $stmt->bindParam(3, $reps[3]);
-    $stmt->bindParam(4, $reps[4]);
+    $stmt->bindParam(1, $reps[0]);
+    $stmt->bindParam(2, $reps[1]);
+    $stmt->bindParam(3, $reps[2]);
+    $stmt->bindParam(4, $reps[3]);
     $stmt->bindParam(5, $idGame);
     $stmt->bindParam(6, $nbQuestion);
     $stmt->execute();
