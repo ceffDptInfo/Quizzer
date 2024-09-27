@@ -13,3 +13,15 @@
 .circle {
   border-radius: 50%;
 }
+
+@media screen and (min-width: 576px) {
+  #response {
+    height: 350px;
+  }
+}
+
+@media screen and (max-width: 576px) {
+  #response {
+    height: 15vh;
+  }
+}

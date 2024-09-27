@@ -35,14 +35,14 @@ if (isset($_POST["create"])) {
 <body>
   <?php require_once('components/header.php') ?>
   <main>
-    <h1 class="text-center fw-bold title-big mt-5">Le Quizzer</h1>
+    <h1 class="text-center fw-bold fs-1 mt-5">Le Quizzer</h1>
     <p class="text-center text-danger fs-5 <?php if (!isset($_SESSION['kicked'])) {
                                               echo "visually-hidden";
                                             } ?>">Vous avez été exclu de la partie</p>
     <form method="post">
-      <div class="d-flex top-50 start-50 position-absolute translate-middle-x w-50 justify-content-around">
+      <div class="d-flex w-100 px-3 px-sm-0 flex-column flex-sm-row top-50 start-50 position-absolute translate-middle-x w-sm-50 justify-content-around">
         <button type="button" class="btn gray btn-lg fw-medium" onclick="window.location.href='player/joining.php'">Rejoindre une partie</button>
-        <button type="submit" class="btn gray btn-lg fw-medium" name="create">Créer une partie</button>
+        <button type="submit" class="btn gray btn-lg fw-medium mt-3 mt-sm-0 d-none d-sm-inline" name="create">Créer une partie</button>
       </div>
     </form>
   </main>
