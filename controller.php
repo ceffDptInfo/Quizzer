@@ -42,12 +42,17 @@ function JoinGame($code, $username, $color)
 
   $code = strtoupper($code);
   $id = $db->GetGameID($code)->fetch()['idGame'];
-  if ($db->GetPlayerId($username, $color, $id)->fetch()['idPlayer'] != false) {
-    return false;
+
+  if ($db->GetGameStatus($id)->fetch()['Status'] == "en attente" || $db->GetGameStatus($id)->fetch()['Status'] == "termine") {
+    if ($db->GetPlayerId($username, $color, $id)->fetch()['idPlayer'] != false) {
+      return false;
+    } else {
+      $db->CreatePlayer($username, $color, $id);
+      $idPlayer = $db->GetPlayerId($username, $color, $id)->fetch()['idPlayer'];
+      return $idPlayer;
+    }
   } else {
-    $db->CreatePlayer($username, $color, $id);
-    $idPlayer = $db->GetPlayerId($username, $color, $id)->fetch()['idPlayer'];
-    return $idPlayer;
+    return false;
   }
 }
 
@@ -249,8 +254,18 @@ function SetStatus($code, $status)
   $db->UpdateStatus($idGame, $status);
 }
 
-function SetGameQuestion($code, $question) {
+function SetGameQuestion($code, $question)
+{
   global $db;
   $idGame = $db->GetGameID($code)->fetch()['idGame'];
   $db->UpdateQuestion($idGame, $question);
+}
+
+function GetPendingPlayers($code)
+{
+  global $db;
+  $idGame = $db->GetGameID($code)->fetch()['idGame'];
+  $players = $db->GetNullRepPlayers($idGame);
+  $nbPlayers = count($players);
+  return $nbPlayers;
 }

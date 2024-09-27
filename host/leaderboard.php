@@ -33,9 +33,19 @@ if ($_SESSION['current'] < count($_SESSION['questions'])) {
 $players = GetPlayers($_SESSION['code']);
 ?>
 
-<body>
+<body style="height: 80vh;">
   <?php require_once('../components/header.php'); ?>
-  <main>
+  <main class="d-flex flex-column position-relative h-100 px-5">
+    <form action="started.php" method="post">
+      <?php if (count(GetPlayers($_SESSION['code'])) == 0): ?>
+        <button name="exit" type="submit" class="btn btn-danger mt-3 p-2">Partir</button>
+      <?php endif; ?>
+      <button type="submit" name="next" class="btn gray p-3 end-0 position-absolute m-3"><?php if ($_SESSION['current'] + 1 < count($_SESSION['questions'])) {
+                                                                                            echo "Prochaine question";
+                                                                                          } else {
+                                                                                            echo "Fin du quiz";
+                                                                                          } ?></button>
+    </form>
     <div class="container mt-4 ms-5">
       <div class="col-4">
         <?php foreach ($players as $player): ?>
@@ -59,14 +69,19 @@ $players = GetPlayers($_SESSION['code']);
         <?php endforeach; ?>
       </div>
     </div>
-    <form action="started.php" method="post">
-      <button type="submit" name="next" class="btn gray p-3 position-absolute end-0 top-50 me-3"><?php if ($_SESSION['current'] + 1 < count($_SESSION['questions'])) {
-                                                                                                    echo "Prochaine question";
-                                                                                                  } else {
-                                                                                                    echo "Fin du quiz";
-                                                                                                  } ?></button>
-    </form>
     </div>
+
+
+    <div class="d-flex mt-auto flex-wrap">
+      <?php for ($i = 0; $i < 4; $i++): ?>
+        <div class="w-50 p-2 <?php if ($i + 1 > 2 && $_SESSION['questions'][$_SESSION['current']][0][$i + 1] == null) {
+                                echo "visually-hidden";
+                              } ?>">
+          <div class="p-4 gray text-center fs-4 <?php if ($i + 1 == $_SESSION['questions'][$_SESSION['current']][0][5]) {
+                                                  echo "bg-success";
+                                                } ?>"><?= $_SESSION['questions'][$_SESSION['current']][0][$i + 1] ?></div>
+        </div>
+      <?php endfor; ?>
   </main>
   <?php require_once('../components/footer.php'); ?>
   <?php ResetAnswers($_SESSION['code']); ?>

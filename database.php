@@ -34,7 +34,7 @@ class Database
 
   function ReturnPlayers(int $id)
   {
-    $stmt = $this->db->prepare("SELECT * FROM `quizzer`.`player` WHERE `Game_idGame` = ? ORDER BY `Points`");
+    $stmt = $this->db->prepare("SELECT * FROM `quizzer`.`player` WHERE `Game_idGame` = ? ORDER BY `Points` DESC");
     $stmt->bindParam(1, $id);
     $stmt->execute();
     return $stmt;
@@ -174,5 +174,13 @@ class Database
     $stmt = $this->db->prepare("DELETE FROM `quizzer`.`question` WHERE `game_idGame` = ?");
     $stmt->bindParam(1, $idGame);
     $stmt->execute();
+  }
+
+  function GetNullRepPlayers($idGame) {
+    $stmt = $this->db->prepare("SELECT `idPlayer` FROM `player` WHERE `rep` IS NULL AND `Game_idGame` = ?");
+    $stmt->bindParam(1, $idGame);
+    $stmt->execute();
+    $players = $stmt->fetchAll();
+    return $players;
   }
 }

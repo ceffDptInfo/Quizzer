@@ -24,6 +24,12 @@
 <?php
 require_once('../controller.php');
 
+if (isset($_POST['exit'])) {
+  EndGame($_SESSION['code']);
+  header("location: lobby.php");
+  exit();
+}
+
 if (isset($_POST['next'])) {
   $_SESSION['current'] += 1;
 }
@@ -40,6 +46,18 @@ if ($_SESSION['current'] >= count($_SESSION['questions'])) {
 <body onload="init();">
   <?php require_once('../components/header.php') ?>
   <main>
+    <script>
+      async function CheckResponded() {
+        const data = await fetch("everyoneresponded.php?code=<?= $_SESSION['code'] ?>");
+        const text = await data.text();
+        if (text == "true") {
+          window.location.href = "../host/leaderboard.php";
+        }
+      }
+
+      setInterval(CheckResponded, 250);
+    </script>
+
     <p class="visually-hidden" id="time"><?= $_SESSION['questions'][$_SESSION['current']][1][0] ?></p>
     <div class="d-flex px-5 mt-4 flex-column" style="height: 80vh;">
       <div class="gray w-100 position-relative" style="height: 100px;">
