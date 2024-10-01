@@ -1,38 +1,41 @@
+var errorMessage;
+
+function init() {
+  errorMsg = document.getElementById("errorMessage");
+}
+
 function ParseFile(input, code) {
+
+  let reader = new FileReader();
+  errorMsg.innerHTML = "";
 
   let questions;
   let images = [];
-  let reader = new FileReader();
 
   for (let file of input.files) {
-    if (file.name.includes("questions")) {
+    const extension = file.name.slice(file.name.lastIndexOf("."));
+    if (extension == ".txt") {
       questions = file;
-    } else {
+    } else if ([".jpg", ".jpeg", ".gif", ".png"].includes(extension)) {
       images.push(file);
     }
   }
 
-  if (questions == null) {
-    document.querySelector("#file-name").classList.remove("visually-hidden")
+  if (questions == null || questions == undefined) {
+    errorMsg.innerHTML = "Aucun fichier .txt n'a été trouvé !";
+    return;
   }
+  reader.readAsText(questions);
 
-  const extension = questions.name.slice(questions.name.lastIndexOf("."));
+  reader.onload = function () {
+    const SplitQuestions = reader.result.split("\n");
+    SendFile(SplitQuestions, code, images);
+  };
 
-  if (extension == '.txt' || extension == '.qcm') {
-    document.querySelector("#file-extension").classList.add("visually-hidden")
-    reader.readAsText(questions);
+  reader.onerror = function () {
+    console.log(reader.error);
+  };
 
-    reader.onload = function () {
-      const SplitQuestions = reader.result.split("\n");
-      SendFile(SplitQuestions, code, images);
-    };
-
-    reader.onerror = function () {
-      console.log(reader.error);
-    };
-  } else {
-    document.querySelector("#file-extension").classList.remove("visually-hidden")
-  }
 }
 
 async function SendFile(result, code, images) {
@@ -43,11 +46,11 @@ async function SendFile(result, code, images) {
   for (img of images) {
     form.append("file_" + img.name, img);
   }
-  const response = await fetch('../host/parsefile.php', {
+  const response = await fetch('../parsefile.php', {
     method: 'POST',
     body: form
   });
   const text = await response.text();
-  console.log(text);
+  errorMsg.innerHTML = text;
 
 }

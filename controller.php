@@ -213,7 +213,10 @@ function QuestionToArray($question)
 {
   $components = explode("::", $question);
   $qa = explode(";", $components[0]);
-  $param = explode(";", $components[1]);
+  $param = [];
+  if (count($components) > 1) {
+    $param = explode(";", $components[1]);
+  }
 
   for ($i = 0; $i < count($qa); $i++) {
     if (str_contains($qa[$i], " ")) {
@@ -268,4 +271,28 @@ function GetPendingPlayers($code)
   $players = $db->GetNullRepPlayers($idGame);
   $nbPlayers = count($players);
   return $nbPlayers;
+}
+
+function CheckQuestions($questions)
+{
+  $filesName = [];
+  foreach ($_FILES as $file) {
+    $filesName[] = $file['name'];
+  }
+
+  foreach ($questions as $key => $q) {
+    if (count($q[0]) < 5) {
+      return "Erreur : La question N." . ($key + 1) . " ne possède pas assez d'arguments.";
+    }
+
+    if ($q[0][(int) $q[0][5]] == null) {
+      return "Erreur : La réponse de la question N." . ($key + 1) . " indique une réponse vide";
+    }
+
+    if (count($q) > 1 && count($q[1]) > 1) { 
+      if (!in_array(trim($q[1][1]), $filesName, true)) {
+        return "Erreur : L'image de la question N." . ($key + 1) . " n'existe pas";
+      }
+    }
+  }
 }

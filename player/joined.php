@@ -58,13 +58,17 @@ if (isset($_POST['quit'])) {
     setInterval(GameStarted, 1000);
   </script>
   <?php require_once('../components/header.php') ?>
-  <form method="post">
-    <main class="mt-5 d-flex flex-column align-items-center" style="height: 60vh;">
-      <h1 class="text-center">Vous avez rejoint la partie</h1>
-      <p class="text-center">En attente du leader pour commencer</p>
-      <button type="submit" name="quit" class="btn gray mt-auto w-25">Quitter</button>
-    </main>
-  </form>
+  <main>
+    <div class="d-flex flex-column mt-5 align-items-center">
+      <div class="flex-fill">
+        <h1 class="text-center">Vous avez rejoint la partie</h1>
+        <p class="text-center">En attente du leader pour commencer</p>
+      </div>
+      <form method="post" class="w-100 d-flex mt-auto">
+        <button type="submit" name="quit" class="btn gray w-25 m-auto">Quitter</button>
+      </form>
+    </div>
+  </main>
   <?php require_once('../components/footer.php') ?>
 
   <!-- Bootstrap JavaScript Libraries -->

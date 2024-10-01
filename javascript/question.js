@@ -12,6 +12,10 @@ function Countdown() {
 
 function init() {
   timeleft = document.getElementById("time").innerHTML.trim();
+  if (timeleft == "") {
+    timeleft = 10;
+  }
+
   if (timeleft < 5) {
     timeleft = 5;
   } else if (timeleft > 120) {

@@ -26,6 +26,8 @@
 <?php
 require_once('../controller.php');
 
+$errorMessage = "";
+
 if (isset($_POST['quit'])) {
   HostQuit();
   header('location: ../index.php');
@@ -46,14 +48,14 @@ if (isset($_POST['start']) && isset($_POST['file'])) {
 }
 ?>
 
-<body>
+<body onload="init();">
   <?php require_once('../components/header.php') ?>
   <main>
     <div class="container-fluid mt-5">
       <div class="row">
         <!-- Code, QR code and buttons -->
         <div class="offset-1 col-3">
-          <p class="text-center fw-bold fs-2 gray"><?= $_SESSION['code']; ?></p>
+          <p class="text-center fw-bold fs-2 gray" style="height: 50px;"><?= $_SESSION['code']; ?></p>
           <div class="mt-5 gray">
             <img src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=<?= $_SESSION['code'] ?>" alt="Qr code pour rejoindre la partie" class="w-100 p-4 object-fit-fill">
           </div>
@@ -63,13 +65,12 @@ if (isset($_POST['start']) && isset($_POST['file'])) {
         </div>
         <!-- File import and players -->
         <div class="offset-1 col-5">
-          <div class="d-flex justify-content-start align-items-stretch mb-5 flex-column">
+          <div class="d-flex justify-content-start align-items-stretch flex-column mb-5" style="height: 50px;">
             <div class="d-flex flex-row">
-              <input type="file" name="file" class="form-control col" id="file" onchange="ParseFile(this, '<?= $_SESSION['code']; ?>');" webkitdirectory></input>
+              <input type="file" name="file" class="form-control col" id="file" onchange="ParseFile(this, '<?= $_SESSION['code']; ?>');" accept=".txt, .jpg, .png, .gif, .jpeg" multiple></input>
               <button type="button" class="btn btn-primary col-3 mx-3" onclick="window.location.href = '../tuto.php';">Besoin d'aide ?</button>
             </div>
-            <p id="file-extension" class="text-danger visually-hidden">Veuillez donner un fichier .txt ou .qcm</p>
-            <p id="file-name" class="text-danger visually-hidden">Le fichier questions.txt n'a pas été trouvé</p>
+            <p class="text-danger" id="errorMessage"><?= $errorMessage ?></p>
             </form>
           </div>
           <!-- Players -->
