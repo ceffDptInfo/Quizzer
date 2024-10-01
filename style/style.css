@@ -1,3 +1,25 @@
+html {
+  height: 100%;
+}
+
+body {
+  min-height: 100%;
+  display: flex;
+  flex-flow: column;
+}
+
+header {
+  flex: 0 1 10vh;
+}
+
+main {
+  flex: 1 1 auto;
+}
+
+footer {
+  flex: 0 1 3vh;
+}
+
 .gray {
   background-color: #D9D9D9;
 }

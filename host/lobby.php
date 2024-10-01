@@ -64,7 +64,10 @@ if (isset($_POST['start']) && isset($_POST['file'])) {
         <!-- File import and players -->
         <div class="offset-1 col-5">
           <div class="d-flex justify-content-start align-items-stretch mb-5 flex-column">
-            <input type="file" name="file" class="form-control h-100" id="file" onchange="ParseFile(this, '<?= $_SESSION['code']; ?>');" webkitdirectory></input>
+            <div class="d-flex flex-row">
+              <input type="file" name="file" class="form-control col" id="file" onchange="ParseFile(this, '<?= $_SESSION['code']; ?>');" webkitdirectory></input>
+              <button type="button" class="btn btn-primary col-3 mx-3" onclick="window.location.href = '../tuto.php';">Besoin d'aide ?</button>
+            </div>
             <p id="file-extension" class="text-danger visually-hidden">Veuillez donner un fichier .txt ou .qcm</p>
             <p id="file-name" class="text-danger visually-hidden">Le fichier questions.txt n'a pas été trouvé</p>
             </form>
