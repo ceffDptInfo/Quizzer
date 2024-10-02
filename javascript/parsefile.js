@@ -12,6 +12,8 @@ function ParseFile(input, code) {
   let questions;
   let images = [];
 
+  ActivateButton(true);
+
   for (let file of input.files) {
     const extension = file.name.slice(file.name.lastIndexOf("."));
     if (extension == ".txt") {
@@ -23,6 +25,7 @@ function ParseFile(input, code) {
 
   if (questions == null || questions == undefined) {
     errorMsg.innerHTML = "Aucun fichier .txt n'a été trouvé !";
+    ActivateButton(false);
     return;
   }
   reader.readAsText(questions);
@@ -52,5 +55,18 @@ async function SendFile(result, code, images) {
   });
   const text = await response.text();
   errorMsg.innerHTML = text;
+  if (errorMsg.innerHTML == "") {
+    ActivateButton(true);
+  } else {
+    ActivateButton(false);
+  }
 
+}
+
+function ActivateButton(activated) {
+  if (activated) {
+    document.getElementById("start").classList.remove("disabled");
+  } else {
+    document.getElementById("start").classList.add("disabled");
+  }
 }

@@ -52,7 +52,7 @@ require_once('../controller.php');
           window.location.href = "joined.php";
         }
       }
-      const Intervalstarted = setInterval(UpdateScreen, 250);
+      const Intervalstarted = setInterval(UpdateScreen, 500);
     </script>
 
   </main>
