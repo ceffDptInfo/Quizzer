@@ -57,7 +57,7 @@ if (isset($_POST['start']) && isset($_POST['file'])) {
         <div class="offset-1 col-3">
           <p class="text-center fw-bold fs-2 gray" style="height: 50px;"><?= $_SESSION['code']; ?></p>
           <div class="mt-5 gray">
-            <img src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=<?= $_SESSION['code'] ?>" alt="Qr code pour rejoindre la partie" class="w-100 p-4 object-fit-fill">
+            <img src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=http://<?= $_SERVER['SERVER_ADDR']."/player/joining.php?code=".$_SESSION['code'] ?>" alt="Qr code pour rejoindre la partie" class="w-100 p-4 object-fit-fill">
           </div>
           <form method="post">
             <button type="submit" name="start" class="btn gray start-50 position-relative translate-middle-x mt-5 fw-semibold w-75 disabled" id="start">Commencer</button>
