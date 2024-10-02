@@ -44,7 +44,7 @@ if (isset($_POST['code']) && isset($_POST['username']) && isset($_POST['color'])
   <main>
     <form method="post" class="position-absolute top-50 start-50 translate-middle d-flex flex-column">
       <label for="code" class="d-block fs-5">Code:</label>
-      <input type="text" name="code" id="code" class="gray rounded border p-3 w-100" placeholder="AAAA" maxlength="4" minlength="4" style="text-transform: uppercase;" required>
+      <input type="text" name="code" id="code" class="gray rounded border p-3 w-100" placeholder="AAAA" maxlength="4" minlength="4" style="text-transform: uppercase;" required value="<?= isset($_GET['code']) == true ? $_GET['code'] : ''; ?>">
 
       <label for="username" class="d-block fs-5">Pseudo:</label>
       <input type="text" name="username" id="username" class="gray rounded border p-3 w-100" minlength="1" maxlength="20" required>
