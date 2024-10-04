@@ -30,7 +30,7 @@ if ($_SESSION['current'] < count($_SESSION['questions'])) {
 }
 
 // Refresh
-$players = GetPlayers($_SESSION['code']);
+$players = GetPlayers($_SESSION['code'], 10);
 ?>
 
 <body style="height: 80vh;">
@@ -46,11 +46,15 @@ $players = GetPlayers($_SESSION['code']);
                                                                                             echo "Fin du quiz";
                                                                                           } ?></button>
     </form>
-    <div class="container mt-4 ms-5">
-      <div class="col-4">
-        <?php foreach ($players as $player): ?>
-          <div class="d-flex flex-column">
-            <div class="gray d-flex flex-row mb-3 border border-3 
+    <div class="container mt-4 ms-5 d-flex flex-column flex-wrap" style="height: 65vh;">
+      <!-- <div class="col-4"> -->
+        <?php 
+        $newRow = 0;
+        foreach ($players as $player): 
+          $newRow++
+        ?>
+          <div class="d-flex flex-column me-2">
+            <div class="gray d-flex flex-row mb-3 border border-3 col-4
             <?php
             if ($player['rep'] == $_SESSION['questions'][$_SESSION['current']][0][5]) {
               echo "border-success";
@@ -61,13 +65,13 @@ $players = GetPlayers($_SESSION['code']);
             }
             ?>
             ">
-              <div class="player-<?= $player['Color'] ?> m-2" style="width:30px; height:30px;"></div>
+              <div class="player-<?= $player['Color'] ?> my-1 mx-2" style="width:30px; height:30px;"></div>
               <div class="d-inline my-auto fs-5 flex-fill"><?= $player['Username'] ?></div>
               <div class="d-inline m-auto fs-5 me-2 fw-bold"><?= $player['Points'] ?></div>
             </div>
           </div>
         <?php endforeach; ?>
-      </div>
+      <!-- </div> -->
     </div>
     </div>
 

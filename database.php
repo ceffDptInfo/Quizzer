@@ -183,4 +183,12 @@ class Database
     $players = $stmt->fetchAll();
     return $players;
   }
+
+  function ReturnPlayersLimit(int $idGame, int $limit) {
+    $stmt = $this->db->prepare("SELECT * FROM `quizzer`.`player` WHERE `Game_idGame` = ? ORDER BY `Points` DESC LIMIT ?");
+    $stmt->bindParam(1, $idGame);
+    $stmt->bindParam(2, $limit, PDO::PARAM_INT);
+    $stmt->execute();
+    return $stmt->fetchAll();
+  }
 }

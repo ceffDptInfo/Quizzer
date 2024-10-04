@@ -26,12 +26,15 @@ function HostQuit()
   $db->RemoveGame($id);
 }
 
-function GetPlayers($code)
+function GetPlayers($code, $limit = 0)
 {
   global $db;
   $id = $db->GetGameID($code)->fetch()['idGame'];
-  if ($id != false) {
+  if ($id != false && $limit == 0) {
     $players = $db->ReturnPlayers($id)->fetchAll();
+    return $players;
+  } else if ($id != false) {
+    $players = $db->ReturnPlayersLimit($id, $limit);
     return $players;
   }
 }
@@ -289,7 +292,7 @@ function CheckQuestions($questions)
       return "Erreur : La réponse de la question N." . ($key + 1) . " indique une réponse vide";
     }
 
-    if (count($q) > 1 && count($q[1]) > 1) { 
+    if (count($q) > 1 && count($q[1]) > 1) {
       if (!in_array(trim($q[1][1]), $filesName, true)) {
         return "Erreur : L'image de la question N." . ($key + 1) . " n'existe pas";
       }
