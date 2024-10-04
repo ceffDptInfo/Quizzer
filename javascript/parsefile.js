@@ -19,6 +19,11 @@ function ParseFile(input, code) {
     if (extension == ".txt") {
       questions = file;
     } else if ([".jpg", ".jpeg", ".gif", ".png"].includes(extension)) {
+      if (file.size > 1024 * 1024 * 10) {
+        errorMsg.innerHTML = "Une image est plus grande que 10Mo";
+        ActivateButton(false);
+        return;
+      }
       images.push(file);
     }
   }
