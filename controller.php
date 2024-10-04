@@ -155,10 +155,16 @@ function UpdatePlayersPoints($players, $rep, $code)
   global $db;
   $idGame = $db->GetGameID($code)->fetch()['idGame'];
   $db->UpdateStatus($idGame, 'leaderboard');
+  $questionDate = new DateTime($db->GetQuestionTime($idGame));
+  $time = 10;
+  if (count($_SESSION['questions'][$_SESSION['current']][1]) > 1) {
+    $time = $_SESSION['questions'][$_SESSION['current']][1][0];
+  }
 
   foreach ($players as $player) {
     if ($player['rep'] == $rep) {
-      $db->UpdatePoints($player['Points'] + 100, $player['idPlayer']);
+      $date = new DateTime($player['ResponseTime']);
+      $db->UpdatePoints($player['Points'] + 100 + ($time - $date->diff($questionDate)->s), $player['idPlayer']);
     }
   }
 }
@@ -298,4 +304,12 @@ function CheckQuestions($questions)
       }
     }
   }
+}
+
+function SetQuestionTime($code)
+{
+  global $db;
+  $idGame = $db->GetGameID($code)->fetch()['idGame'];
+
+  $db->UpdateGameQuestionTime($idGame, date('Y-m-d H:i:s'));
 }

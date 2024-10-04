@@ -35,6 +35,7 @@ if (isset($_POST['next'])) {
 }
 SetStatus($_SESSION['code'], "en cours");
 SetGameQuestion($_SESSION['code'], $_SESSION['current'] + 1);
+SetQuestionTime($_SESSION['code']);
 
 if ($_SESSION['current'] >= count($_SESSION['questions'])) {
   EndGame($_SESSION['code']);

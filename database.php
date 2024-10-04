@@ -130,7 +130,7 @@ class Database
 
   function UpdateResponse($rep, $time, int $idPlayer)
   {
-    $stmt = $this->db->prepare("UPDATE `quizzer`.`player` SET `rep` = ?, `time` = ? WHERE `idPlayer` = ?");
+    $stmt = $this->db->prepare("UPDATE `quizzer`.`player` SET `rep` = ?, `ResponseTime` = ? WHERE `idPlayer` = ?");
     $stmt->bindParam(1, $rep);
     $stmt->bindParam(2, $time);
     $stmt->bindParam(3, $idPlayer);
@@ -176,7 +176,8 @@ class Database
     $stmt->execute();
   }
 
-  function GetNullRepPlayers($idGame) {
+  function GetNullRepPlayers($idGame)
+  {
     $stmt = $this->db->prepare("SELECT `idPlayer` FROM `player` WHERE `rep` IS NULL AND `Game_idGame` = ?");
     $stmt->bindParam(1, $idGame);
     $stmt->execute();
@@ -184,11 +185,26 @@ class Database
     return $players;
   }
 
-  function ReturnPlayersLimit(int $idGame, int $limit) {
+  function ReturnPlayersLimit(int $idGame, int $limit)
+  {
     $stmt = $this->db->prepare("SELECT * FROM `quizzer`.`player` WHERE `Game_idGame` = ? ORDER BY `Points` DESC LIMIT ?");
     $stmt->bindParam(1, $idGame);
     $stmt->bindParam(2, $limit, PDO::PARAM_INT);
     $stmt->execute();
     return $stmt->fetchAll();
+  }
+
+  function UpdateGameQuestionTime(int $idGame, string $timestamp) {
+    $stmt = $this->db->prepare("UPDATE `quizzer`.`game` SET `StartedTime` = ? WHERE `idGame` = ?");
+    $stmt->bindParam(1, $timestamp);
+    $stmt->bindParam(2, $idGame);
+    $stmt->execute();
+  }
+
+  function GetQuestionTime(int $idGame) {
+    $stmt = $this->db->prepare("SELECT `StartedTime` FROM `quizzer`.`game` WHERE `idGame` = ?");
+    $stmt->bindParam(1, $idGame);
+    $stmt->execute();
+    return $stmt->fetch()['StartedTime'];
   }
 }

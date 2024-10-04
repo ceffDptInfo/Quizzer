@@ -28,6 +28,7 @@ CREATE TABLE IF NOT EXISTS `quizzer`.`game` (
   `Code` VARCHAR(4) NOT NULL,
   `Status` VARCHAR(45) NOT NULL DEFAULT 'en attente',
   `QuestionID` INT NULL DEFAULT NULL,
+  `StartedTime` DATETIME NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`idGame`),
   UNIQUE INDEX `idGame_UNIQUE` (`idGame` ASC) VISIBLE,
   UNIQUE INDEX `Code_UNIQUE` (`Code` ASC) VISIBLE)
@@ -47,8 +48,8 @@ CREATE TABLE IF NOT EXISTS `quizzer`.`player` (
   `Color` VARCHAR(6) NOT NULL DEFAULT 'red',
   `Game_idGame` INT UNSIGNED NOT NULL,
   `timestamp` INT NOT NULL,
-  `rep` INT NULL,
-  `time` INT NULL,
+  `rep` INT NULL DEFAULT NULL,
+  `ResponseTime` DATETIME NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`idPlayer`),
   UNIQUE INDEX `UniqueID` (`Username` ASC, `Color` ASC, `Game_idGame` ASC) VISIBLE,
   INDEX `fk_Player_Game_idx` (`Game_idGame` ASC) INVISIBLE,

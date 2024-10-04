@@ -23,7 +23,7 @@
 require_once('../controller.php');
 
 if (isset($_POST['rep'])) {
-  SendResponse($_POST['rep'], $_POST['time'], $_SESSION['id']);
+  SendResponse($_POST['rep'], date('Y-m-d H:i:s'), $_SESSION['id']);
   header('location: sent.php');
   exit();
 }
@@ -57,13 +57,6 @@ if (isset($_POST['rep'])) {
         }
       }
       const Intervalstarted = setInterval(UpdateScreen, 250);
-
-
-      document.getElementById("time").value = 500;
-
-      function RemovePoints() {
-        document.getElementById("time").value -= 1;
-      }
     </script>
   </main>
   <?php require_once('../components/footer.php') ?>
