@@ -66,7 +66,7 @@ $players = GetPlayers($_SESSION['code'], 10);
             ?>
             ">
               <div class="player-<?= $player['Color'] ?> my-1 mx-2" style="width:30px; height:30px;"></div>
-              <div class="d-inline my-auto fs-5 flex-fill"><?= $player['Username'] ?></div>
+              <div class="d-inline my-auto fs-5 flex-fill"><?= htmlspecialchars($player['Username']) ?></div>
               <div class="d-inline m-auto fs-5 me-2 fw-bold"><?= $player['Points'] ?></div>
             </div>
           </div>

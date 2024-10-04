@@ -58,7 +58,7 @@ if ($_SESSION['current'] >= count($_SESSION['questions'])) {
       setInterval(CheckResponded, 250);
     </script>
 
-    <p class="visually-hidden" id="time"><?php count($_SESSION['questions'][$_SESSION['current']][1]) > 0 ? $_SESSION['questions'][$_SESSION['current']][1][0] : "" ?></p>
+    <p class="visually-hidden" id="time"><?= count($_SESSION['questions'][$_SESSION['current']][1]) > 0 ? $_SESSION['questions'][$_SESSION['current']][1][0] : "" ?></p>
     <div class="d-flex px-5 mt-4 flex-column" style="height: 80vh;">
       <div class="gray w-100 position-relative" style="height: 100px;">
         <p class="text-center position-absolute top-50 start-50 translate-middle fs-2"><?= $_SESSION['questions'][$_SESSION['current']][0][0] ?></p>
