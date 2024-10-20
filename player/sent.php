@@ -44,11 +44,11 @@ require_once('../controller.php');
       async function UpdateScreen() {
         const data = await fetch('getGameStatus.php?id=<?= $_SESSION['id']; ?>');
         const value = await data.text();
-        if (value == "leaderboard") {
+        if (value.trim() == "leaderboard") {
           next = true;
-        } else if (value == "en cours" && next == true) {
+        } else if (value.trim() == "en cours" && next == true) {
           window.location.href = "ingame.php";
-        } else if (value == "termine") {
+        } else if (value.trim() == "termine") {
           window.location.href = "joined.php";
         }
       }
