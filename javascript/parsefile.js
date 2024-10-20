@@ -59,7 +59,7 @@ async function SendFile(result, code, images) {
     body: form
   });
   const text = await response.text();
-  errorMsg.innerHTML = text;
+  errorMsg.innerHTML = text.trim();
   if (errorMsg.innerHTML == "") {
     ActivateButton(true);
   } else {

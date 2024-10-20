@@ -2,7 +2,7 @@
 <html lang="fr">
 
 <head>
-  <title>Le Quizzer</title>
+  <title>Quizzer - Home</title>
   <!-- Required meta tags -->
   <meta charset="utf-8" />
   <meta

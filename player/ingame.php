@@ -44,15 +44,15 @@ if (isset($_POST['rep'])) {
         const data = await fetch('getGameStatus.php?id=<?= $_SESSION['id']; ?>');
         const value = await data.text();
 
-        if (value == "commence") {
+        if (value.trim() == "commence") {
           document.getElementById("starting").classList.remove("visually-hidden");
-        } else if (value == "en cours") {
+        } else if (value.trim() == "en cours") {
           document.getElementById("starting").classList.add("visually-hidden");
           document.getElementById("playing").classList.remove("visually-hidden");
           if (typeof Intervalpoints === 'undefined') {
             const Intervalpoints = setInterval(RemovePoints, 20);
           }
-        } else if (value == "leaderboard") {
+        } else if (value.trim() == "leaderboard") {
           window.location.href = "sent.php?out=true";
         }
       }

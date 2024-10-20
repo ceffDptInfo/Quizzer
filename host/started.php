@@ -38,8 +38,8 @@ SetGameQuestion($_SESSION['code'], $_SESSION['current'] + 1);
 SetQuestionTime($_SESSION['code']);
 
 if ($_SESSION['current'] >= count($_SESSION['questions'])) {
-  EndGame($_SESSION['code']);
-  header("location: lobby.php");
+  header("location: highscore.php");
+  SetStatus($_SESSION['code'], "termine");
   exit();
 }
 ?>
@@ -51,7 +51,7 @@ if ($_SESSION['current'] >= count($_SESSION['questions'])) {
       async function CheckResponded() {
         const data = await fetch("everyoneresponded.php?code=<?= $_SESSION['code'] ?>");
         const text = await data.text();
-        if (text == "true") {
+        if (text.trim() == "true") {
           window.location.href = "../host/leaderboard.php";
         }
       }
